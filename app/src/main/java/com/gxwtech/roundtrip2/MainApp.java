@@ -3,7 +3,7 @@ package com.gxwtech.roundtrip2;
 import android.app.Application;
 import android.content.res.Resources;
 
-import info.nightscout.androidaps.plugins.PumpMedtronic.util.MedtronicConst;
+import info.nightscout.androidaps.plugins.pump.medtronic.util.MedtronicConst;
 import info.nightscout.utils.SP;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -26,7 +26,8 @@ public class MainApp extends Application {
         serviceClientConnection = new ServiceClientConnection();
 
         //initialize Realm
-        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(instance()).name("rt2.realm").schemaVersion(0).deleteRealmIfMigrationNeeded() // TODO: 03/08/2016 @TIM remove
+        Realm.init(instance());
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().name("rt2.realm").schemaVersion(0).deleteRealmIfMigrationNeeded() // TODO: 03/08/2016 @TIM remove
                 .build();
         Realm.setDefaultConfiguration(realmConfiguration);
 

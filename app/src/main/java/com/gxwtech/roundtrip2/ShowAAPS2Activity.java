@@ -14,25 +14,15 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import info.nightscout.androidaps.plugins.PumpCommon.hw.rileylink.RileyLinkUtil;
-import info.nightscout.androidaps.plugins.PumpMedtronic.comm.MedtronicCommunicationManager;
-import info.nightscout.androidaps.plugins.PumpMedtronic.comm.data.BasalProfile;
-import info.nightscout.androidaps.plugins.PumpMedtronic.comm.data.BasalProfileEntry;
-import info.nightscout.androidaps.plugins.PumpMedtronic.comm.data.TempBasalPair;
-import info.nightscout.androidaps.plugins.PumpMedtronic.data.dto.BatteryStatusDTO;
-import info.nightscout.androidaps.plugins.PumpMedtronic.data.dto.PumpSettingDTO;
-import info.nightscout.androidaps.plugins.PumpMedtronic.defs.BatteryType;
-import info.nightscout.androidaps.plugins.PumpMedtronic.defs.MedtronicDeviceType;
-import info.nightscout.androidaps.plugins.PumpMedtronic.util.MedtronicUtil;
-import info.nightscout.androidaps.plugins.PumpOmnipod.comm.OmnipodCommunicationManager;
+import info.nightscout.androidaps.plugins.pump.common.hw.rileylink.RileyLinkUtil;
+import info.nightscout.androidaps.plugins.pump.medtronic.comm.data.TempBasalPair;
+import info.nightscout.androidaps.plugins.pump.omnipod.comm.OmnipodCommunicationManager;
 
 public class ShowAAPS2Activity extends AppCompatActivity {
 
@@ -53,6 +43,7 @@ public class ShowAAPS2Activity extends AppCompatActivity {
 
         // FIXME
         addCommandAction("Initialize new POD", ImplementationStatus.Done, "RefreshData.InitializePod");
+        addCommandAction("Finish prime", ImplementationStatus.Done, "RefreshData.FinishPrime");
 //        addCommandAction("Set Basal Profile", ImplementationStatus.WorkInProgress, "RefreshData.SetBasalProfile");
 //        addCommandAction("Status - Bolus", ImplementationStatus.WorkInProgress, "RefreshData.GetStatus"); // weird on 512?
 //
@@ -391,8 +382,12 @@ public class ShowAAPS2Activity extends AppCompatActivity {
                 switch (selectedCommandAction.intentString) {
                     case "RefreshData.InitializePod": {
                         returnData = getCommunicationManager().initializePod();
+                        break;
                     }
-                    break;
+                    case "RefreshData.FinishPrime": {
+                        returnData = getCommunicationManager().finishPrime();
+                        break;
+                    }
 //
 //                    case "RefreshData.BasalProfile": {
 //                        returnData = getCommunicationManager().getBasalProfile();
